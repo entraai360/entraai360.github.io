@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apartamento Teste | TourMotion3D</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<style>
+  html,body{margin:0;height:100%;background:#0b0f17;font-family:system-ui,Segoe UI,Roboto,sans-serif}
+  #pano{position:fixed;inset:0}
+  .topo{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;
+        padding:10px 16px;background:linear-gradient(#000a,#0000);color:#fff;pointer-events:none}
+  .topo a{pointer-events:auto;color:#fff;text-decoration:none;font-weight:700;letter-spacing:.5px}
+  .topo a span{color:#38bdf8}
+  .topo small{opacity:.85}
+  .menu{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:8px;
+        flex-wrap:wrap;justify-content:center;max-width:calc(100% - 32px)}
+  .menu button{border:0;border-radius:999px;padding:9px 16px;background:#000a;color:#fff;font-size:14px;cursor:pointer;
+        backdrop-filter:blur(6px)}
+  .menu button.ativo{background:#38bdf8;color:#0b0f17;font-weight:700}
+</style>
+</head>
+<body>
+<div class="topo"><a href="../../">Tour<span>Motion</span>3D</a><small>Apartamento Teste</small></div>
+<div id="pano"></div>
+<div class="menu" id="menu"></div>
+<script>
+const cenas = {
+  entrada: {nome:"Entrada", liga:[["sala",180,"Ir para a sala"]]},
+  sala:    {nome:"Sala",    liga:[["entrada",0,"Voltar à entrada"],["cozinha",90,"Ir para a cozinha"],["jantar",-90,"Ir para a sala de jantar"]]},
+  cozinha: {nome:"Cozinha", liga:[["sala",-90,"Voltar à sala"],["jantar",180,"Ir para a sala de jantar"]]},
+  jantar:  {nome:"Sala de jantar", liga:[["sala",90,"Voltar à sala"],["cozinha",0,"Ir para a cozinha"]]}
+};
+const scenes = {};
+for (const [id,c] of Object.entries(cenas)) {
+  scenes[id] = {
+    title: c.nome, type: "equirectangular", panorama: "img/" + id + ".jpg",
+    hfov: 100, autoLoad: true,
+    hotSpots: c.liga.map(([alvo,yaw,txt]) => ({pitch:-10, yaw, type:"scene", text:txt, sceneId:alvo}))
+  };
+}
+const viewer = pannellum.viewer("pano", {
+  default: {firstScene: "entrada", sceneFadeDuration: 800, autoRotate: -2, compass: false},
+  scenes
+});
+const menu = document.getElementById("menu");
+for (const [id,c] of Object.entries(cenas)) {
+  const b = document.createElement("button");
+  b.textContent = c.nome; b.dataset.id = id;
+  b.onclick = () => viewer.loadScene(id);
+  menu.appendChild(b);
+}
+function marca(){ const atual = viewer.getScene();
+  menu.querySelectorAll("button").forEach(b => b.classList.toggle("ativo", b.dataset.id === atual)); }
+viewer.on("scenechange", () => setTimeout(marca, 50)); viewer.on("load", marca);
+</script>
+</body>
+</html>
