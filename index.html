@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TourMotion3D | Tours virtuais 360°</title>
+<meta name="description" content="TourMotion3D: tours virtuais 360° de imóveis e residências.">
+<style>
+  :root{--bg:#0b0f17;--card:#141b29;--txt:#e8edf5;--sub:#9aa7bd;--acc:#38bdf8}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,Segoe UI,Roboto,sans-serif;line-height:1.55}
+  a{color:inherit}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+  header{padding:18px 0}
+  .logo{font-weight:800;font-size:22px;letter-spacing:.5px;text-decoration:none}
+  .logo span{color:var(--acc)}
+  .hero{padding:72px 0 56px}
+  .hero h1{font-size:clamp(30px,5.5vw,52px);line-height:1.1;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--acc)}
+  .hero p{color:var(--sub);font-size:18px;max-width:620px;margin:0 0 28px}
+  .btn{display:inline-block;background:var(--acc);color:#0b0f17;font-weight:700;padding:13px 24px;border-radius:999px;text-decoration:none}
+  h2{font-size:26px;margin:0 0 20px}
+  section{padding:40px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--card);border-radius:14px;padding:22px}
+  .card b{display:block;font-size:17px;margin-bottom:6px}
+  .card p{margin:0;color:var(--sub);font-size:15px}
+  .num{color:var(--acc);font-weight:800;font-size:14px;margin-bottom:6px;display:block}
+  .tour{display:block;text-decoration:none;background:linear-gradient(135deg,#1e3a5f,#141b29);border-radius:14px;padding:28px}
+  .tour b{font-size:19px}
+  .tour p{color:var(--sub);margin:6px 0 0}
+  footer{padding:36px 0;color:var(--sub);font-size:14px;border-top:1px solid #1f2838;margin-top:30px}
+</style>
+</head>
+<body>
+<header class="wrap"><a class="logo" href="./">Tour<span>Motion</span>3D</a></header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1>Seu imóvel visitado <em>de qualquer lugar</em>, em 360°.</h1>
+    <p>Criamos tours virtuais imersivos de casas e apartamentos. O cliente percorre cada ambiente pelo celular ou computador, como se estivesse lá.</p>
+    <a class="btn" href="tours/apartamento-teste/">Ver tour de exemplo</a>
+  </div>
+
+  <section>
+    <h2>Por que usar um tour virtual</h2>
+    <div class="grid">
+      <div class="card"><b>Mais interesse</b><p>Anúncios com tour 360° prendem a atenção e geram contatos mais qualificados.</p></div>
+      <div class="card"><b>Menos visitas perdidas</b><p>Quem agenda a visita presencial já conhece o imóvel e chega decidido.</p></div>
+      <div class="card"><b>Funciona em tudo</b><p>Celular, computador e óculos VR, sem instalar nenhum aplicativo.</p></div>
+      <div class="card"><b>Fácil de divulgar</b><p>Um link para o WhatsApp, redes sociais ou o site da imobiliária.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Como funciona</h2>
+    <div class="grid">
+      <div class="card"><span class="num">01</span><b>Captação</b><p>Fotografamos cada ambiente em 360°.</p></div>
+      <div class="card"><span class="num">02</span><b>Edição</b><p>Ajuste de luz e cor, e montagem dos pontos de navegação.</p></div>
+      <div class="card"><span class="num">03</span><b>Publicação</b><p>Você recebe o link do tour pronto para compartilhar.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tours</h2>
+    <div class="grid">
+      <a class="tour" href="tours/apartamento-teste/"><b>Apartamento Teste →</b><p>Entrada, sala, cozinha e sala de jantar.</p></a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">© 2026 TourMotion3D. Tours virtuais 360°.</footer>
+</body>
+</html>
