@@ -1,6 +1,6 @@
 # EntraAí 360
 
-Site e tours virtuais 360° de imóveis (visualizador: Pannellum).
+Site e tours virtuais 360° de imóveis (visualizador: Pannellum): https://entraai360.github.io
 
 - `index.html`: página inicial
 - `tours/<nome>/index.html`: um tour, com as cenas e as ligações definidas no objeto `cenas`
