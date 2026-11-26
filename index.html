@@ -2,73 +2,223 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TourMotion3D | Tours virtuais 360°</title>
-<meta name="description" content="TourMotion3D: tours virtuais 360° de imóveis e residências.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EntraAí 360 | Tour 360° de imóveis em Rio Preto</title>
+<meta name="description" content="Tour virtual 360° de casas e apartamentos em São José do Rio Preto e região. A visita começa antes de chegar.">
+<meta property="og:title" content="EntraAí 360 | Tour 360° de imóveis">
+<meta property="og:description" content="Entra aí, a casa é sua. Tours virtuais 360° para venda e locação.">
+<meta name="theme-color" content="#22252A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 80'%3E%3Cpath d='M8 78V14Q8 6 16 6h32q8 0 8 8v64' fill='none' stroke='%2322252A' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M56 12 34 20v58l22-4z' fill='%23B5471F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
 <style>
-  :root{--bg:#0b0f17;--card:#141b29;--txt:#e8edf5;--sub:#9aa7bd;--acc:#38bdf8}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,Segoe UI,Roboto,sans-serif;line-height:1.55}
-  a{color:inherit}
-  .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
-  header{padding:18px 0}
-  .logo{font-weight:800;font-size:22px;letter-spacing:.5px;text-decoration:none}
-  .logo span{color:var(--acc)}
-  .hero{padding:72px 0 56px}
-  .hero h1{font-size:clamp(30px,5.5vw,52px);line-height:1.1;margin:0 0 16px}
-  .hero h1 em{font-style:normal;color:var(--acc)}
-  .hero p{color:var(--sub);font-size:18px;max-width:620px;margin:0 0 28px}
-  .btn{display:inline-block;background:var(--acc);color:#0b0f17;font-weight:700;padding:13px 24px;border-radius:999px;text-decoration:none}
-  h2{font-size:26px;margin:0 0 20px}
-  section{padding:40px 0}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-  .card{background:var(--card);border-radius:14px;padding:22px}
-  .card b{display:block;font-size:17px;margin-bottom:6px}
-  .card p{margin:0;color:var(--sub);font-size:15px}
-  .num{color:var(--acc);font-weight:800;font-size:14px;margin-bottom:6px;display:block}
-  .tour{display:block;text-decoration:none;background:linear-gradient(135deg,#1e3a5f,#141b29);border-radius:14px;padding:28px}
-  .tour b{font-size:19px}
-  .tour p{color:var(--sub);margin:6px 0 0}
-  footer{padding:36px 0;color:var(--sub);font-size:14px;border-top:1px solid #1f2838;margin-top:30px}
+:root{
+  --telha:#B5471F; --telha-clara:#E07A4F; --grafite:#22252A; --cal:#F5EFE6;
+  --madeira:#8A5A36; --jardim:#3F5B45; --janela:#DCE6EA; --sub:#4A4640; --sub2:#6A5E52;
+  --f-marca:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-texto:"Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cal);color:var(--grafite);font-family:var(--f-texto);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img,svg{display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left))}
+h1,h2,h3{font-family:var(--f-marca);line-height:1.08;letter-spacing:-.02em;margin:0}
+.ai{color:var(--telha)}
+
+/* Topo */
+.topo{position:sticky;top:0;z-index:10;background:rgba(245,239,230,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,37,42,.08)}
+.topo .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 23px/1 var(--f-marca);letter-spacing:-.02em}
+.marca svg{width:26px;height:32px}
+.marca small{font:500 13px/1 var(--f-marca);color:var(--sub2);margin-left:2px}
+.menu{display:flex;align-items:center;gap:22px;font-weight:500;font-size:15px}
+.menu a{text-decoration:none}
+.menu a:not(.btn):hover{color:var(--telha)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--telha);color:var(--cal);font-weight:700;font-size:15px;
+  padding:12px 20px;border-radius:999px;text-decoration:none;transition:transform .15s,background .15s;border:0}
+.btn:hover{background:#9C3C19;transform:translateY(-1px)}
+.btn.claro{background:transparent;color:var(--grafite);box-shadow:inset 0 0 0 2px var(--grafite)}
+.btn.claro:hover{background:var(--grafite);color:var(--cal)}
+.btn svg{width:18px;height:18px}
+@media (max-width:720px){.menu a:not(.btn){display:none}.topo .btn{padding:10px 16px}}
+
+/* Abertura */
+.abertura{padding:64px 0 40px}
+.abertura .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+.selo{display:inline-flex;align-items:center;gap:8px;background:var(--janela);color:var(--grafite);font-weight:700;font-size:13px;
+  padding:7px 13px;border-radius:999px;margin-bottom:20px}
+.selo i{width:8px;height:8px;border-radius:50%;background:var(--jardim);display:block}
+.abertura h1{font-size:clamp(38px,6vw,66px);font-weight:800}
+.abertura p{font-size:19px;color:var(--sub);max-width:520px;margin:20px 0 30px}
+.acoes{display:flex;flex-wrap:wrap;gap:12px}
+.simbolo-grande{justify-self:center;width:min(300px,70vw)}
+@media (max-width:860px){.abertura .wrap{grid-template-columns:1fr}.simbolo-grande{display:none}.abertura{padding-top:40px}}
+
+/* Tour em destaque */
+.tour{padding:24px 0 72px}
+.tour-cab{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.tour-cab h2{font-size:clamp(28px,4vw,40px)}
+.tour-cab p{margin:6px 0 0;color:var(--sub2)}
+.moldura{position:relative;border-radius:22px;overflow:hidden;background:var(--grafite);box-shadow:0 30px 60px -30px rgba(34,37,42,.55);aspect-ratio:16/9}
+.moldura iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (max-width:720px){.moldura{aspect-ratio:4/5;border-radius:16px}}
+.dicas{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;color:var(--sub2);font-size:14px}
+
+/* Seções */
+section.bloco{padding:72px 0}
+.titulo-secao{font-size:clamp(28px,4vw,42px);max-width:640px;margin-bottom:12px}
+.lead{color:var(--sub);font-size:18px;max-width:620px;margin:0 0 36px}
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:#fff;border-radius:18px;padding:26px;border:1px solid rgba(34,37,42,.07)}
+.card h3{font-size:20px;font-weight:800;margin:14px 0 8px}
+.card p{margin:0;color:var(--sub);font-size:15.5px}
+.icone{width:44px;height:44px;border-radius:12px;background:var(--janela);display:grid;place-items:center}
+.icone svg{width:24px;height:24px;stroke:var(--telha);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.escuro{background:var(--grafite);color:var(--cal)}
+.escuro .lead{color:#CFC6BA}
+.escuro .ai{color:var(--telha-clara)}
+.passos{counter-reset:p;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px}
+.passo{border-top:2px solid rgba(245,239,230,.18);padding-top:20px}
+.passo::before{counter-increment:p;content:"0" counter(p);font:800 15px/1 var(--f-marca);color:var(--telha-clara)}
+.passo h3{font-size:21px;margin:12px 0 8px}
+.passo p{margin:0;color:#CFC6BA;font-size:15.5px}
+
+.publico .card{border-left:4px solid var(--madeira)}
+
+/* Chamada final */
+.chamada{padding:80px 0}
+.caixa{background:var(--telha);color:var(--cal);border-radius:26px;padding:clamp(32px,6vw,64px);display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:center}
+.caixa h2{font-size:clamp(30px,4.5vw,48px);font-weight:800}
+.caixa p{margin:14px 0 0;font-size:18px;color:#FBE9DF}
+.caixa .acoes{justify-content:flex-end}
+.caixa .btn{background:var(--cal);color:var(--grafite)}
+.caixa .btn:hover{background:#fff}
+.caixa .btn.claro{background:transparent;color:var(--cal);box-shadow:inset 0 0 0 2px var(--cal)}
+.caixa .btn.claro:hover{background:rgba(245,239,230,.12)}
+@media (max-width:800px){.caixa{grid-template-columns:1fr}.caixa .acoes{justify-content:flex-start}}
+
+footer{padding:36px 0 calc(36px + env(safe-area-inset-bottom));color:var(--sub2);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--telha)}
+:focus-visible{outline:3px solid var(--telha);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 </style>
 </head>
 <body>
-<header class="wrap"><a class="logo" href="./">Tour<span>Motion</span>3D</a></header>
 
-<main class="wrap">
-  <div class="hero">
-    <h1>Seu imóvel visitado <em>de qualquer lugar</em>, em 360°.</h1>
-    <p>Criamos tours virtuais imersivos de casas e apartamentos. O cliente percorre cada ambiente pelo celular ou computador, como se estivesse lá.</p>
-    <a class="btn" href="tours/apartamento-teste/">Ver tour de exemplo</a>
+<header class="topo">
+  <div class="wrap">
+    <a class="marca" href="./" aria-label="EntraAí 360, início">
+      <svg viewBox="0 0 64 80" aria-hidden="true"><path d="M8 78V14Q8 6 16 6h32q8 0 8 8v64" fill="none" stroke="#22252A" stroke-width="6" stroke-linecap="round"/><path d="M56 12 34 20v58l22-4z" fill="#B5471F"/><circle cx="39" cy="48" r="2.6" fill="#F5EFE6"/></svg>
+      <span>Entra<span class="ai">Aí</span><small>360°</small></span>
+    </a>
+    <nav class="menu" aria-label="Principal">
+      <a href="#tour">Tour</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#para-quem">Para quem</a>
+      <a class="btn" href="https://wa.me/5517997840585?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20de%20tour%20360%C2%B0." target="_blank" rel="noopener">Pedir orçamento</a>
+    </nav>
   </div>
+</header>
 
-  <section>
-    <h2>Por que usar um tour virtual</h2>
-    <div class="grid">
-      <div class="card"><b>Mais interesse</b><p>Anúncios com tour 360° prendem a atenção e geram contatos mais qualificados.</p></div>
-      <div class="card"><b>Menos visitas perdidas</b><p>Quem agenda a visita presencial já conhece o imóvel e chega decidido.</p></div>
-      <div class="card"><b>Funciona em tudo</b><p>Celular, computador e óculos VR, sem instalar nenhum aplicativo.</p></div>
-      <div class="card"><b>Fácil de divulgar</b><p>Um link para o WhatsApp, redes sociais ou o site da imobiliária.</p></div>
+<main>
+  <section class="abertura">
+    <div class="wrap">
+      <div>
+        <span class="selo"><i></i>São José do Rio Preto e região</span>
+        <h1>A visita começa <span class="ai">antes de chegar.</span></h1>
+        <p>Tour virtual 360° de casas e apartamentos para venda e locação. O cliente entra, dá uma volta pela sala e conhece cada cômodo pelo celular, sem sair do sofá.</p>
+        <div class="acoes">
+          <a class="btn" href="#tour">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>
+            Entra aí no tour
+          </a>
+          <a class="btn claro" href="https://wa.me/5517997840585?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20de%20tour%20360%C2%B0." target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
+      </div>
+      <svg class="simbolo-grande" viewBox="0 0 64 80" aria-hidden="true"><path d="M8 78V14Q8 6 16 6h32q8 0 8 8v64" fill="none" stroke="#22252A" stroke-width="5" stroke-linecap="round"/><path d="M56 12 34 20v58l22-4z" fill="#B5471F"/><circle cx="39" cy="48" r="2.2" fill="#F5EFE6"/></svg>
     </div>
   </section>
 
-  <section>
-    <h2>Como funciona</h2>
-    <div class="grid">
-      <div class="card"><span class="num">01</span><b>Captação</b><p>Fotografamos cada ambiente em 360°.</p></div>
-      <div class="card"><span class="num">02</span><b>Edição</b><p>Ajuste de luz e cor, e montagem dos pontos de navegação.</p></div>
-      <div class="card"><span class="num">03</span><b>Publicação</b><p>Você recebe o link do tour pronto para compartilhar.</p></div>
+  <section class="tour" id="tour" aria-labelledby="tit-tour">
+    <div class="wrap">
+      <div class="tour-cab">
+        <div>
+          <h2 id="tit-tour">Entra aí, <span class="ai">a casa é sua.</span></h2>
+          <p>Apartamento 103 · Torre 1 · 9 ambientes</p>
+        </div>
+        <a class="btn claro" href="tours/ap103-torre1/" target="_blank" rel="noopener">Abrir em tela cheia</a>
+      </div>
+      <div class="moldura">
+        <iframe src="tours/ap103-torre1/" title="Tour 360° do Apartamento 103, Torre 1" loading="lazy" allow="fullscreen; gyroscope; accelerometer" allowfullscreen></iframe>
+      </div>
+      <div class="dicas"><span>Arraste para olhar em volta</span><span>Toque nas setas do chão para andar</span><span>Use a barra de cômodos para pular direto</span></div>
     </div>
   </section>
 
-  <section>
-    <h2>Tours</h2>
-    <div class="grid">
-      <a class="tour" href="tours/apartamento-teste/"><b>Apartamento Teste →</b><p>Entrada, sala, cozinha e sala de jantar.</p></a>
+  <section class="bloco" aria-labelledby="tit-porque">
+    <div class="wrap">
+      <h2 class="titulo-secao" id="tit-porque">Por que colocar o imóvel <span class="ai">em 360°</span></h2>
+      <p class="lead">Quem chega para a visita já conhece a casa. Menos ida e volta, mais conversa de quem quer fechar.</p>
+      <div class="grade">
+        <div class="card"><div class="icone"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Mais atenção no anúncio</h3><p>O cliente para, entra e passeia. Fica mais tempo olhando o seu imóvel do que o do vizinho.</p></div>
+        <div class="card"><div class="icone"><svg viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="m9 16 2 2 4-4"/></svg></div><h3>Visitas que valem a pena</h3><p>Quem agenda a visita presencial já sabe o que vai encontrar e chega decidido.</p></div>
+        <div class="card"><div class="icone"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div><h3>Abre em qualquer tela</h3><p>Celular, computador ou tablet, sem baixar aplicativo. É só tocar no link.</p></div>
+        <div class="card"><div class="icone"><svg viewBox="0 0 24 24"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="m16 6-4-4-4 4M12 2v13"/></svg></div><h3>Fácil de compartilhar</h3><p>Um link para o WhatsApp, o Instagram, os portais ou o site da imobiliária.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloco escuro" id="como-funciona" aria-labelledby="tit-como">
+    <div class="wrap">
+      <h2 class="titulo-secao" id="tit-como">Como <span class="ai">funciona</span></h2>
+      <p class="lead">Você cuida do imóvel arrumado. O resto é com a gente.</p>
+      <div class="passos">
+        <div class="passo"><h3>Captação</h3><p>Vamos até o imóvel e fotografamos cada ambiente em 360°, com câmera profissional.</p></div>
+        <div class="passo"><h3>Edição</h3><p>Ajustamos luz e cor, nivelamos as paredes e ligamos os cômodos com setas no chão.</p></div>
+        <div class="passo"><h3>Entrega</h3><p>Você recebe o link do tour com a nossa marca, pronto para divulgar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloco publico" id="para-quem" aria-labelledby="tit-quem">
+    <div class="wrap">
+      <h2 class="titulo-secao" id="tit-quem">Para <span class="ai">quem</span> é</h2>
+      <p class="lead">Do apartamento compacto à casa de alto padrão, para venda ou locação.</p>
+      <div class="grade">
+        <div class="card"><h3>Corretores</h3><p>Mostre o imóvel para o cliente de fora da cidade e filtre quem realmente quer visitar.</p></div>
+        <div class="card"><h3>Imobiliárias</h3><p>Destaque a carteira nos portais e nas redes com um padrão de apresentação único.</p></div>
+        <div class="card"><h3>Proprietários</h3><p>Venda ou alugue com menos visitas desnecessárias e mais gente interessada de verdade.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chamada" aria-labelledby="tit-chamada">
+    <div class="wrap">
+      <div class="caixa">
+        <div>
+          <h2 id="tit-chamada">Bora colocar o seu imóvel em 360°?</h2>
+          <p>Orçamento sem compromisso pelo WhatsApp ou pelo direct do Instagram.</p>
+        </div>
+        <div class="acoes">
+          <a class="btn" href="https://wa.me/5517997840585?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20de%20tour%20360%C2%B0." target="_blank" rel="noopener">WhatsApp (17) 99784-0585</a>
+          <a class="btn claro" href="https://instagram.com/entraai360" target="_blank" rel="noopener">@entraai360</a>
+        </div>
+      </div>
     </div>
   </section>
 </main>
 
-<footer class="wrap">© 2026 TourMotion3D. Tours virtuais 360°.</footer>
+<footer>
+  <div class="wrap">
+    <span>© 2026 EntraAí 360 · Tour 360° de imóveis · São José do Rio Preto e região</span>
+    <span><a href="https://instagram.com/entraai360" target="_blank" rel="noopener">Instagram</a> · <a href="https://wa.me/5517997840585" target="_blank" rel="noopener">WhatsApp</a></span>
+  </div>
+</footer>
 </body>
 </html>
