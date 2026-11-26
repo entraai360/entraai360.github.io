@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ap 103 Torre 1 | EntraAí 360</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+</head>
+<body>
+<style>
+/* Layout: panorama em tela cheia; marca no topo, cômodos numa faixa rolável embaixo */
+:root{
+  --telha:#B5471F; --grafite:#22252A; --cal:#F5EFE6; --madeira:#8A5A36;
+  --veu:rgba(34,37,42,.72); --veu-forte:rgba(34,37,42,.9);
+  --f-marca:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-texto:"Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+html,body{height:100%}
+body{margin:0;background:var(--grafite);color:var(--cal);font-family:var(--f-texto);overflow:hidden}
+#pano{position:fixed;inset:0}
+
+/* Pannellum: só o essencial (controles nativos ocultos) */
+.pnlm-container{position:relative;width:100%;height:100%;overflow:hidden;cursor:grab;outline:0;touch-action:none;background:var(--grafite)}
+.pnlm-container.pnlm-grabbing{cursor:grabbing}
+.pnlm-ui,.pnlm-render-container,.pnlm-dragfix{position:absolute;inset:0;width:100%;height:100%}
+.pnlm-ui{z-index:1}
+.pnlm-render-container{cursor:inherit}
+.pnlm-hotspot-base{position:absolute;visibility:hidden;top:0;z-index:1}
+.pnlm-load-box,.pnlm-about-msg,.pnlm-panorama-info,.pnlm-controls-container,.pnlm-orientation-button,.pnlm-compass,.pnlm-info-box,.pnlm-load-button{display:none!important}
+.pnlm-error-msg{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;background:var(--veu-forte);padding:24px}
+
+/* Pontos de navegação */
+/* Só o disco e o rótulo recebem clique (nada de área invisível) */
+.porta{width:0;height:0;pointer-events:none}
+.porta.longe{display:none}
+/* marcador achatado no chão (2D, sem 3D, para a área de clique ser exatamente o desenho) */
+.porta .alvo{position:absolute;left:-30px;top:-17px;width:60px;height:34px;border-radius:50%;pointer-events:auto;cursor:pointer;
+  background:rgba(181,71,31,.9);border:3px solid var(--cal);box-shadow:0 6px 14px rgba(0,0,0,.35);
+  display:grid;place-items:center;transition:transform .2s}
+.porta .alvo svg{width:22px;height:22px;transform:scaleY(.7)}
+.porta:hover .alvo,.porta:focus-visible .alvo{transform:scale(1.12)}
+.porta .rotulo{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);white-space:nowrap;pointer-events:auto;cursor:pointer;
+  background:var(--veu-forte);color:var(--cal);font:600 13px/1 var(--f-texto);padding:7px 11px;border-radius:999px}
+.porta .alvo::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--cal);opacity:.0;pointer-events:none;animation:pulso 2.4s ease-out infinite}
+@keyframes pulso{0%{transform:scale(.8);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+
+/* Topo */
+.topo{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:calc(12px + env(safe-area-inset-top,0px));padding-bottom:28px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:linear-gradient(var(--veu),transparent);pointer-events:none}
+.marca{display:flex;align-items:center;gap:10px;font:800 20px/1 var(--f-marca);letter-spacing:-.01em}
+.marca svg{width:30px;height:30px;flex:none}
+.marca b{color:var(--telha);font-weight:800}
+.imovel{text-align:right;min-width:0}
+.imovel strong{display:block;font:600 15px/1.2 var(--f-marca)}
+.imovel span{font-size:12px;opacity:.8}
+
+/* Cômodos */
+.comodos{position:fixed;left:0;right:0;bottom:0;z-index:5;
+  padding-top:28px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:linear-gradient(transparent,var(--veu))}
+.trilho{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;justify-content:safe center}
+.trilho::-webkit-scrollbar{display:none}
+.trilho button{flex:none;border:1px solid rgba(245,239,230,.25);background:var(--veu);color:var(--cal);
+  font:500 14px/1 var(--f-texto);padding:10px 15px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)}
+.trilho button:focus-visible{outline:2px solid var(--cal);outline-offset:2px}
+.trilho button[aria-current="true"]{background:var(--telha);border-color:var(--telha);font-weight:700}
+
+.dica{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;background:var(--veu-forte);
+  padding:12px 18px;border-radius:12px;font-size:14px;pointer-events:none;transition:opacity .6s}
+.dica.some{opacity:0}
+@media (prefers-reduced-motion:reduce){.porta .alvo::after{animation:none}.dica{transition:none}}
+</style>
+
+<div id="pano" aria-label="Tour 360° do apartamento"></div>
+
+<header class="topo">
+  <div class="marca">
+    <svg viewBox="0 0 64 80" aria-hidden="true"><path d="M8 78V14Q8 6 16 6h32q8 0 8 8v64" fill="none" stroke="#F5EFE6" stroke-width="6" stroke-linecap="round"/><path d="M56 12 34 20v58l22-4z" fill="#E07A4F"/><circle cx="39" cy="48" r="2.6" fill="#22252A"/></svg>
+    <span>Entra<b>Aí</b> 360</span>
+  </div>
+  <div class="imovel"><strong>Ap 103 · Torre 1</strong><span id="atual">Entrada</span></div>
+</header>
+
+<div class="dica" id="dica">Arraste para olhar em volta · use dois dedos para zoom</div>
+
+<nav class="comodos" aria-label="Cômodos"><div class="trilho" id="trilho"></div></nav>
+
+<script>
+// Ligações entre os cômodos: [destino, yaw do ponto, texto]
+// [destino, yaw, texto, pitch (no chão)]; barra = botão da barra que fica aceso nessa cena
+const cenas = {
+  "entrada":          {nome:"Entrada",          yaw:0,    liga:[["hall",-28,"Hall",-17],["sala",0,"Sala",-24],["varanda",27,"Varanda",-17],["cozinha",62,"Cozinha",-30]]},
+  "cozinha":          {nome:"Cozinha",          yaw:-60,  liga:[["entrada",-6,"Entrada",-20]]},
+  "sala":             {nome:"Sala",             yaw:18,   liga:[["cozinha",-88,"Cozinha",-34],["entrada",-54,"Entrada",-31],["hall",70,"Hall",-18],["varanda",164,"Varanda",-18]]},
+  "varanda":          {nome:"Varanda",          yaw:10,   liga:[["sala",8,"Sala",-22]]},
+  "hall":             {nome:"Hall",             yaw:-10,  liga:[["sala",-90,"Sala",-30],["banheiro-hospede",-10,"Banheiro hóspede",-30],["quarto-suite",80,"Quarto suíte",-30],["quarto-hospede",175,"Quarto hóspede",-30]]},
+  "quarto-hospede":   {nome:"Quarto hóspede",   yaw:-119, liga:[["hall",52,"Hall",-33]]},
+  "banheiro-hospede": {nome:"Banheiro hóspede", yaw:-90,  liga:[["hall",26,"Hall",-32]]},
+  "quarto-suite":     {nome:"Quarto suíte",     yaw:-110, liga:[["hall",31,"Hall",-29],["banheiro-suite",81,"Banheiro suíte",-31]]},
+  "banheiro-suite":   {nome:"Banheiro suíte",   yaw:0,    liga:[["quarto-suite",-151,"Quarto suíte",-30]]}
+};
+const seta = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8h-4v8H9v-8H5z" fill="#F5EFE6"/></svg>';
+const marcadores = [];
+function criaPorta(div, d){
+  marcadores.push({div, yaw: d.yaw, pitch: d.pitch, cena: d.cena});
+  div.classList.add("porta"); div.tabIndex = 0; div.setAttribute("role","button"); div.setAttribute("aria-label","Ir para " + d.texto);
+  div.innerHTML = '<span class="alvo">' + seta + '</span><span class="rotulo">' + d.texto + '</span>';
+  div.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); viewer.loadScene(d.alvo); } });
+}
+const scenes = {};
+for (const [id, c] of Object.entries(cenas)) {
+  scenes[id] = {
+    type: "cubemap", cubeMap: ["f","r","b","l","u","d"].map(f => "img/" + id + "/" + f + ".jpg"), yaw: c.yaw, pitch: -12,
+    hotSpots: c.liga.map(([alvo, yaw, texto, pitch = -28]) => ({
+      pitch, yaw, type: "scene", sceneId: alvo, cssClass: "porta",
+      createTooltipFunc: criaPorta, createTooltipArgs: {texto, alvo, yaw, pitch, cena: id}
+    }))
+  };
+}
+// Esconde de verdade (display:none) os marcadores fora do campo de visão:
+// perto de 90° da direção olhada o Pannellum projeta o ponto em coordenadas enormes.
+const rad = Math.PI / 180;
+function direcao(yaw, pitch){ return [Math.cos(pitch*rad)*Math.sin(yaw*rad), Math.sin(pitch*rad), Math.cos(pitch*rad)*Math.cos(yaw*rad)]; }
+function vigia(){
+  if (typeof viewer !== "undefined" && viewer.getScene) {
+    const cena = viewer.getScene(), v = direcao(viewer.getYaw(), viewer.getPitch());
+    const limite = Math.cos(Math.min(80, viewer.getHfov() * 0.62) * rad);
+    for (const m of marcadores) {
+      const h = direcao(m.yaw, m.pitch);
+      const fora = m.cena !== cena || (v[0]*h[0] + v[1]*h[1] + v[2]*h[2]) < limite;
+      m.div.classList.toggle("longe", fora);
+    }
+  }
+  requestAnimationFrame(vigia);
+}
+requestAnimationFrame(vigia);
+const viewer = pannellum.viewer("pano", {
+  default: {firstScene: "entrada", sceneFadeDuration: 700, autoLoad: true,
+            hfov: 100, minHfov: 50, maxHfov: 110, maxPitch: 72, minPitch: -90,
+            showControls: false, compass: false, autoRotate: -1.5, autoRotateInactivityDelay: 8000},
+  scenes
+});
+
+const trilho = document.getElementById("trilho"), atual = document.getElementById("atual");
+for (const [id, c] of Object.entries(cenas)) {
+  if (c.barra) continue;
+  const b = document.createElement("button");
+  b.type = "button"; b.id = "c-" + id; b.textContent = c.nome; b.dataset.id = id;
+  b.onclick = () => { if (viewer.getScene() !== id) viewer.loadScene(id); };
+  trilho.appendChild(b);
+}
+function marca(){
+  const id = viewer.getScene();
+  atual.textContent = cenas[id].nome;
+  trilho.querySelectorAll("button").forEach(b => {
+    const on = b.dataset.id === (cenas[id].barra || id); b.setAttribute("aria-current", on);
+    if (on) b.scrollIntoView({inline:"center", block:"nearest", behavior:"smooth"});
+  });
+}
+viewer.on("load", marca); viewer.on("scenechange", () => setTimeout(marca, 60));
+const dica = document.getElementById("dica");
+const esconde = () => dica.classList.add("some");
+viewer.on("mousedown", esconde); viewer.on("touchstart", esconde); setTimeout(esconde, 6000);
+</script>
+
+
+</body>
+</html>
